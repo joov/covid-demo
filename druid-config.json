@@ -1,0 +1,84 @@
+{
+    "type": "index_parallel",
+    "spec": {
+      "ioConfig": {
+        "type": "index_parallel",
+        "inputSource": {
+          "type": "local",
+          "filter": "*",
+          "baseDir": "/opt/druid/data"
+        },
+        "inputFormat": {
+          "type": "json"
+        }
+      },
+      "tuningConfig": {
+        "type": "index_parallel",
+        "partitionsSpec": {
+          "type": "dynamic"
+        }
+      },
+      "dataSchema": {
+        "dataSource": "data",
+        "granularitySpec": {
+          "type": "uniform",
+          "queryGranularity": "HOUR",
+          "rollup": true,
+          "segmentGranularity": "DAY"
+        },
+        "timestampSpec": {
+          "column": "dateRep",
+          "format": "dd/MM/yyyy"
+        },
+        "dimensionsSpec": {
+          "dimensions": [
+            "continentExp",
+            "countriesAndTerritories",
+            "countryterritoryCode",
+            "geoId"
+          ]
+        },
+        "metricsSpec": [
+          {
+            "name": "count",
+            "type": "count"
+          },
+          {
+            "name": "sum_cases",
+            "type": "longSum",
+            "fieldName": "cases"
+          },
+          {
+            "name": "sum_Cumulative_number_for_14_days_of_COVID-19_cases_per_100000",
+            "type": "doubleSum",
+            "fieldName": "Cumulative_number_for_14_days_of_COVID-19_cases_per_100000"
+          },
+          {
+            "name": "sum_day",
+            "type": "longSum",
+            "fieldName": "day"
+          },
+          {
+            "name": "sum_deaths",
+            "type": "longSum",
+            "fieldName": "deaths"
+          },
+          {
+            "name": "sum_month",
+            "type": "longSum",
+            "fieldName": "month"
+          },
+          {
+            "name": "sum_popData2019",
+            "type": "longSum",
+            "fieldName": "popData2019"
+          },
+          {
+            "name": "sum_year",
+            "type": "longSum",
+            "fieldName": "year"
+          }
+        ]
+      }
+    }
+  }

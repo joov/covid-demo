@@ -1,0 +1,51 @@
+---
+    - hosts: all
+      remote_user: ubuntu
+      become: yes
+      tasks:
+      - name: Install packages
+        apt:
+          name:
+          - tar
+          - net-tools
+          - openjdk-8-jre
+          state: latest
+          cache_valid_time: 3600
+      - name: Prepare environment
+        lineinfile:
+            path: /etc/environment
+            line: _JAVA_OPTIONS=-Djava.net.preferIPv4Stack=true
+      - name: Creates directory
+        file:
+            path: /opt/druid
+            state: directory
+            owner: root
+            group: root
+      - name: Get druid installation file
+        unarchive:
+            src: http://apache.mirror.iphh.net/druid/0.19.0/apache-druid-0.19.0-bin.tar.gz
+            dest: /opt/druid
+            remote_src: yes
+            owner: root
+            group: root
+      - name: Creates directory
+        file:
+            path: /opt/druid/scripts
+            state: directory            
+            owner: root
+            group: root
+      - name: Creates directory
+        file:
+            path: /opt/druid/data
+            state: directory
+            owner: root
+            group: root
+            mode: 0777
+      - name: copy script
+        copy:
+            src: ./get_data.sh
+            dest: /opt/druid/scripts/get_data.sh
+            owner: root
+            group: root
+            mode: 0777
+
