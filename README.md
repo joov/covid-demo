@@ -1,5 +1,7 @@
 # Covid-19 Druid example
 
+This is an example of using [apache druid](https://druid.apache.org/) as database together with [apache superset](https://superset.incubator.apache.org/) to visualize data.
+
 ## Preparation
 
 - Get an aws/azure/google instance with ubuntu 20 LTS
